@@ -12,7 +12,7 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
 
   if (!token) {
     console.error("Unauthorized request! No token provided.");
-    throw new ApiError(400, "Unauthorized request! No token provided.");
+    throw new ApiError(401, "Unauthorized request! No token provided.");
   }
 
   // Verify and decode token
@@ -25,7 +25,7 @@ export const verifyJwt = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     console.error("User not found! Invalid access token.");
-    throw new ApiError(400, "User not found! Invalid access token.");
+    throw new ApiError(404, "User not found! Invalid access token.");
   }
 
   // Attach user info to request

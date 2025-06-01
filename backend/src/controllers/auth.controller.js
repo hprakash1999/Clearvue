@@ -10,7 +10,7 @@ const generateAccessAndRefreshToken = async (userID) => {
     // Validate user exists
     if (!user) {
       console.error("User not found for token generation.");
-      throw new ApiError(400, "User not found for token generation.");
+      throw new ApiError(404, "User not found for token generation.");
     }
 
     // Generate tokens
