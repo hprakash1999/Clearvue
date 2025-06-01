@@ -44,30 +44,6 @@ const login = asyncHandler(async (req, res) => {
   // TODO: implement login controller
 });
 
-const getCurrentUser = asyncHandler(async (req, res) => {
-  // TODO: implement get current user controller
-});
-
-// Logout user
-const logout = asyncHandler(async (req, res) => {
-  // TODO: implement logout controller
-});
-
-// Update user
-const updateUserDetails = asyncHandler(async (req, res) => {
-  // TODO: implement update user details controller
-});
-
-// Update user's avatar
-const updateAvatar = asyncHandler(async (req, res) => {
-  // TODO: implement update avatar controller
-});
-
-// Update user's password
-const updatePassword = asyncHandler(async (req, res) => {
-  // TODO: implement update password controller
-});
-
 // Forget password
 const forgetPassword = asyncHandler(async (req, res) => {
   // TODO: implement forget password controller
@@ -83,21 +59,4 @@ const resetPassword = asyncHandler(async (req, res) => {
   // TODO: implement reset password controller
 });
 
-// Refresh existing tokens
-const refreshExistingTokens = asyncHandler(async (req, res) => {
-  // TODO: implement refresh existing token controller
-});
-
-export {
-  forgetPassword,
-  getCurrentUser,
-  login,
-  logout,
-  refreshExistingTokens,
-  resetPassword,
-  signup,
-  updateAvatar,
-  updatePassword,
-  updateUserDetails,
-  verifyOTP,
-};
+export { forgetPassword, login, resetPassword, signup, verifyOTP };

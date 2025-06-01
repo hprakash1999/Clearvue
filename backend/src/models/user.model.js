@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "/assets/default-avatar.png",
     },
     email: {
       type: String,

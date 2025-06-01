@@ -19,15 +19,16 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // Import routes
-import authRouter from "./routes/auth.route.js";
 import bannerRouter from "./routes/banner.route.js";
 import flashSaleRouter from "./routes/flashSale.route.js";
 import productRouter from "./routes/product.route.js";
 import productVariantRouter from "./routes/productVariant.route.js";
 import reviewRouter from "./routes/review.route.js";
+import userRouter from "./routes/user.route.js";
 
 // Route declarations
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRouter);
 app.use("/api/v1/productVariant", productVariantRouter);
 app.use("/api/v1/banner", bannerRouter);
