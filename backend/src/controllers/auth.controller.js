@@ -1,11 +1,12 @@
 import { User } from "../models/user.model.js";
+import { signupService } from "../services/signup.service.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 // Generate JWT tokens handler
-const generateAccessAndRefreshToken = async (userID) => {
+const generateAccessAndRefreshToken = async (id) => {
   try {
-    const user = await User.findById(userID);
+    const user = await User.findById(id);
 
     // Validate user exists
     if (!user) {
@@ -34,29 +35,44 @@ const cookieOptions = {
   sameSite: "Strict",
 };
 
-// Sign up user
-const signup = asyncHandler(async (req, res) => {
-  // TODO: implement signup controller
+// Signup user
+export const signup = asyncHandler(async (req, res) => {
+  const { firstName, lastName, email, phone, password, gender, address } =
+    req.body;
+
+  // Create new user
+  const createdUser = await signupService(
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    address
+  );
+
+  // Return response
+  return res
+    .status(201)
+    .json(new ApiResponse(201, createdUser, "User registered successfully!"));
 });
 
 // Login user
-const login = asyncHandler(async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   // TODO: implement login controller
 });
 
 // Forget password
-const forgetPassword = asyncHandler(async (req, res) => {
+export const forgetPassword = asyncHandler(async (req, res) => {
   // TODO: implement forget password controller
 });
 
 // Verify OTP
-const verifyOTP = asyncHandler(async (req, res) => {
+export const verifyOTP = asyncHandler(async (req, res) => {
   // TODO: implement verify OTP controller
 });
 
 // Reset password via OTP
-const resetPassword = asyncHandler(async (req, res) => {
+export const resetPassword = asyncHandler(async (req, res) => {
   // TODO: implement reset password controller
 });
-
-export { forgetPassword, login, resetPassword, signup, verifyOTP };

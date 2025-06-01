@@ -19,6 +19,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // Import routes
+import authRouter from "./routes/auth.route.js";
 import bannerRouter from "./routes/banner.route.js";
 import flashSaleRouter from "./routes/flashSale.route.js";
 import productRouter from "./routes/product.route.js";
