@@ -6,6 +6,7 @@ import cors from "cors";
 import express, { Application } from "express";
 import { resolvers } from "./graphql/resolvers";
 import { typeDefs } from "./graphql/schema";
+import { getUserFromToken } from "./utils/auth";
 
 const app: Application = express();
 
@@ -35,7 +36,15 @@ const apolloServer = new ApolloServer({
     "/graphql",
     json(),
     expressMiddleware(apolloServer, {
-      context: async ({ req, res }) => ({ req, res }),
+      context: async ({ req, res }) => {
+        const token =
+          req.cookies?.accessToken ||
+          req.header("Authorization")?.replace("Bearer ", "");
+
+        const user = await getUserFromToken(token);
+
+        return { req, res, user };
+      },
     })
   );
 })();

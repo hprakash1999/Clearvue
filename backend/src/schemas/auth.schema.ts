@@ -16,7 +16,9 @@ export const signupSchema = z.object({
 
   password: z.string().min(8, "Password must be at least 8 characters long"),
 
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum(["male", "female", "other"], {
+    required_error: "Gender is required",
+  }),
 
   address: z.object({
     street: z.string().min(1, "Street is required").trim(),
@@ -35,3 +37,5 @@ export const signupSchema = z.object({
       .trim(),
   }),
 });
+
+export type SignupInput = z.infer<typeof signupSchema>;
