@@ -1,6 +1,21 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-const bannerSchema = new mongoose.Schema(
+// Banner interface
+export interface IBanner extends Document {
+  headline: string;
+  image: string; // Cloudinary URL
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+  type: string;
+  priorityOrder: number;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// Banner schema
+const bannerSchema = new Schema<IBanner>(
   {
     headline: {
       type: String,
@@ -8,7 +23,7 @@ const bannerSchema = new mongoose.Schema(
       trim: true,
     },
     image: {
-      type: String, // Cloudinary URL
+      type: String,
       required: true,
     },
     description: {
@@ -41,4 +56,7 @@ const bannerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Banner = mongoose.model("Banner", bannerSchema);
+export const Banner: Model<IBanner> = mongoose.model<IBanner>(
+  "Banner",
+  bannerSchema
+);

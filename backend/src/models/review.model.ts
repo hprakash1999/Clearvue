@@ -1,6 +1,18 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-const reviewSchema = new mongoose.Schema(
+// Review interface
+export interface IReview extends Document {
+  user: mongoose.Types.ObjectId;
+  product: mongoose.Types.ObjectId;
+  rating: number;
+  comment: string;
+  isFeatured?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// Review schema
+const reviewSchema = new Schema<IReview>(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -30,4 +42,7 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Review = mongoose.model("Review", reviewSchema);
+export const Review: Model<IReview> = mongoose.model<IReview>(
+  "Review",
+  reviewSchema
+);

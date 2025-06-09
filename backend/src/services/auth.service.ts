@@ -19,7 +19,7 @@ export const signupService = async (
     throw new ApiError(409, "User already exists with this email or phone.");
   }
 
-  // create a new user
+  // Create a new user
   const user = new User.create({
     firstName,
     lastName,

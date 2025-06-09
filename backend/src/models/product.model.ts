@@ -1,6 +1,29 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 
-const productSchema = new mongoose.Schema(
+// Product interface
+export interface IProduct extends Document {
+  name: string;
+  type: string;
+  size: "small" | "medium" | "large" | "extra-large";
+  color: string;
+  material: string;
+  gender: "male" | "female" | "unisex";
+  description: string;
+  variants: mongoose.Types.ObjectId[];
+  reviewCount: number;
+  avgRating: number;
+  originalPrice: number;
+  sellingPrice: number;
+  regularDiscount: number;
+  images: string[];
+  isAvailable: boolean;
+  isFeatured: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// Product schema
+const productSchema = new Schema<IProduct>(
   {
     name: {
       type: String,
@@ -69,7 +92,7 @@ const productSchema = new mongoose.Schema(
     },
     images: [
       {
-        type: String, // Array of Cloudinary URLs
+        type: String, // Cloudinary URLs
       },
     ],
     isAvailable: {
@@ -84,4 +107,7 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product: Model<IProduct> = mongoose.model<IProduct>(
+  "Product",
+  productSchema
+);
