@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
 
+/**
+ * @module models/banner
+ * Mongoose model for application banners.
+ *
+ * Includes:
+ * - headline: Banner headline
+ * - image: Banner image URL
+ * - description: Banner description
+ * - ctaText: Call to Action text
+ * - ctaLink: Call to Action link
+ * - type: Banner type (e.g festive, seasonal, etc.)
+ * - priorityOrder: Priority order for display (1-7)
+ * - isActive: Flag indicating if the banner is active
+ */
+
 const bannerSchema = new mongoose.Schema(
   {
     headline: {
@@ -13,7 +28,6 @@ const bannerSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     ctaText: {
       type: String,
@@ -25,12 +39,12 @@ const bannerSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      required: true,
+      enum: ["festival", "seasonal", "product"],
     },
     priorityOrder: {
       type: Number,
       min: 1,
-      max: 10,
+      max: 7,
       required: true,
     },
     isActive: {

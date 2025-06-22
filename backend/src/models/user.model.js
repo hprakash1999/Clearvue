@@ -2,6 +2,24 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
+/**
+ * @module models/user
+ * Mongoose model for users.
+ *
+ * Includes:
+ * - firstName: User's first name
+ * - lastName: User's last name
+ * - avatar: User's avatar URL
+ * - email: User's email
+ * - phone: User's phone number
+ * - address: User's address (street, city, state, country, pincode)
+ * - password: User's password
+ * - gender: User's gender
+ * - role: User's role (admin or user)
+ * - refreshToken: User's refresh token
+ * - favorites: User's favorite products
+ * - otp: User's one-time password
+ */
 const userSchema = new mongoose.Schema(
   {
     firstName: {

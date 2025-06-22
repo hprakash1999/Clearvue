@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+/**
+ * @module models/review
+ * Mongoose model for product reviews.
+ *
+ * Includes:
+ * - user: User ID
+ * - product: Product ID
+ * - rating: Review rating
+ * - comment: Review comment
+ * - isFeatured: Flag indicating if the review is featured
+ */
 const reviewSchema = new mongoose.Schema(
   {
     user: {

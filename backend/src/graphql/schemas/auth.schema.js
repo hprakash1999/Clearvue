@@ -1,5 +1,15 @@
 import gql from "graphql-tag";
 
+/**
+ * @module graphql/schemas/auth.schema
+ * GraphQL type definitions (SDL) for auth-related operations.
+ *
+ * Includes:
+ * - User and Address object types
+ * - Signup input & response types
+ * - Root-level Mutation for user signup
+ * - Empty Query placeholder
+ */
 export const authTypeDefs = gql`
   type Address {
     street: String!

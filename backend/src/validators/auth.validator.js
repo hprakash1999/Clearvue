@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+/**
+ * @module validators/auth
+ * Zod validators for validating auth-related inputs:
+ *
+ * Includes:
+ * - signupValidator: Signup input validation
+ * - loginValidator: Login input validation
+ */
+
 // Signup validator
 export const signupValidator = z.object({
   firstName: z.string().min(1, "First name is required").trim().toLowerCase(),

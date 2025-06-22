@@ -1,6 +1,23 @@
 import { User } from "../models/user.model.js";
 import { ApiError } from "./ApiError.js";
 
+/**
+ * @module utils/tokens
+ * Generates access and refresh tokens for a given user ID.
+ *
+ * - Fetches the user from the database
+ * - Generates and returns both access and refresh tokens
+ * - Persists the new refresh token on the user document
+ *
+ * @async
+ * @function generateAccessAndRefreshToken
+ * @param {string} id - The user's MongoDB `_id`
+ * @returns {Promise<{ accessToken: string, refreshToken: string }>}
+ *
+ * @example
+ * const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
+ */
+
 export const generateAccessAndRefreshToken = async (id) => {
   try {
     const user = await User.findById(id);

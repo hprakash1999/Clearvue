@@ -2,6 +2,15 @@ import dotenv from "dotenv";
 import { app } from "./app.js";
 import { connectDB } from "./config/db.js";
 
+/**
+ * @module index
+ * Entry point of the application.
+ *
+ * - Loads environment variables from `.env`
+ * - Connects to the MongoDB database
+ * - Starts the Express server if DB connection is successful
+ */
+
 // Load environment variables
 dotenv.config({ path: "./.env" });
 

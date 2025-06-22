@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+/**
+ * @module models/productVariant
+ * Mongoose model for product variants.
+ *
+ * Includes:
+ * - name: Variant name
+ * - attribute: Variant attribute
+ * - variants: Array of variant values
+ * - products: Array of product IDs
+ */
 const productVariantSchema = new mongoose.Schema(
   {
     name: {

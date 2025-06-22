@@ -4,12 +4,26 @@ import { ApiError } from "../utils/ApiError.js";
 import { resolvers } from "./resolvers.js";
 import { typeDefs } from "./schemas.js";
 
-// Setup GraphQL server
+/**
+ * @module graphql/server
+ * Initializes and configures the Apollo GraphQL server.
+ *
+ * Features:
+ * - Custom error formatting using ApiError
+ * - TypeDefs and resolvers wiring
+ * - Injects request/response into context for access in resolvers
+ *
+ * @function setupGraphQL
+ * @param {Express.Application} app - Express app instance
+ * @returns {Promise<void>}
+ */
 export const setupGraphQL = async (app) => {
-  // Apollo server
+  // Initialize Apollo Server with schema and resolvers
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+
+    // Custom error formatter
     formatError: (error) => {
       if (error.originalError instanceof ApiError) {
         return {
@@ -21,20 +35,21 @@ export const setupGraphQL = async (app) => {
         };
       }
 
+      // Fallback error formatting
       return {
         message: error.message,
       };
     },
   });
 
-  // Start server
+  // Start the Apollo Server
   await server.start();
 
-  // GraphQL middleware
+  // Mount Apollo middleware on Express under /graphql
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      context: async ({ req, res }) => ({ req, res }),
+      context: async ({ req, res }) => ({ req, res }), // Pass context to resolvers
     })
   );
 };
