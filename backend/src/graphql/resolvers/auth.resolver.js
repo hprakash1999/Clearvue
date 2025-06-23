@@ -1,4 +1,8 @@
-import { loginService, signupService } from "../../services/auth.service.js";
+import {
+  loginService,
+  logoutService,
+  signupService,
+} from "../../services/auth.service.js";
 import { generateAccessAndRefreshToken } from "../../services/tokens.service.js";
 import { ApiError } from "../../utils/apiError.util.js";
 import {
@@ -19,6 +23,8 @@ import {
  *
  * Currently includes:
  * - Mutation.signup: Handles new user registration
+ * - Mutation.login: Handles user login
+ * - Mutation.logout: Handles user logout
  */
 export const authResolvers = {
   Mutation: {
@@ -77,6 +83,8 @@ export const authResolvers = {
         }
 
         // Handle unexpected errors
+        console.error("Signup unexpected error. ERR: ", err);
+
         throw err instanceof ApiError
           ? err
           : new ApiError(500, "Internal server error. Please try again.", err);
@@ -110,7 +118,7 @@ export const authResolvers = {
 
         // Generate tokens and save refreshToken on user
         const { accessToken, refreshToken } =
-          await generateAccessAndRefreshToken(createdUser._id);
+          await generateAccessAndRefreshToken(loggedInUser._id);
 
         // Set auth cookies
         setAuthCookies(res, { accessToken, refreshToken });
@@ -137,6 +145,8 @@ export const authResolvers = {
         }
 
         // Handle unexpected errors
+        console.error("Login unexpected error. ERR: ", err);
+
         throw err instanceof ApiError
           ? err
           : new ApiError(500, "Internal server error. Please try again.", err);
@@ -153,6 +163,8 @@ export const authResolvers = {
      * @throws {ApiError} On validation or unexpected errors
      */
     logout: async (_parent, _args, context) => {
+      console.log("Context: ", context);
+
       const { res, user } = context;
 
       try {
@@ -170,6 +182,7 @@ export const authResolvers = {
           message: "User logged out successfully!",
         });
       } catch (err) {
+        console.error("Logout unexpected error. ERR: ", err);
         // Handle unexpected errors
         throw err instanceof ApiError
           ? err

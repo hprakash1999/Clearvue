@@ -13,7 +13,7 @@ import { ApiError } from "../utils/apiError.util.js";
  */
 
 // Generate tokens handler
-export const generateTokensFromUser = async (user) => {
+export const generateTokens = async (user) => {
   const accessToken = await user.generateAccessToken();
   const refreshToken = await user.generateRefreshToken();
 
