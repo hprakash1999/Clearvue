@@ -7,8 +7,11 @@ import gql from "graphql-tag";
  * Includes:
  * - User and Address object types
  * - Signup input & response types
- * - Root-level Mutation for user signup
+ * - Login input & response types
+ * - Common response type
+ * - Root-level Mutation for user operations
  * - Empty Query placeholder
+ *
  */
 export const authTypeDefs = gql`
   type Address {
@@ -48,14 +51,32 @@ export const authTypeDefs = gql`
     address: AddressInput!
   }
 
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
   type SignupResponse {
     success: Boolean!
     message: String!
     user: User!
   }
 
+  type LoginResponse {
+    success: Boolean!
+    message: String!
+    user: User!
+  }
+
+  type CommonResponse {
+    success: Boolean!
+    message: String!
+  }
+
   type Mutation {
     signup(input: SignupInput!): SignupResponse!
+    login(input: LoginInput!): LoginResponse!
+    logout: CommonResponse!
   }
 
   type Query {

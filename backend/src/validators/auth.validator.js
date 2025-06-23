@@ -44,3 +44,10 @@ export const signupValidator = z.object({
       .trim(),
   }),
 });
+
+// Login validator
+export const loginValidator = z.object({
+  email: z.string().email("Invalid email").trim().toLowerCase(),
+
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+});

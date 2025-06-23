@@ -110,7 +110,14 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving
+/**
+ * Hook to hash password before saving
+ *
+ * @async
+ * @function save
+ * @returns {Promise<void>}
+ * @throws {Error} If password is not modified
+ */
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next(); // Skip if password isn't modified
 
@@ -118,12 +125,24 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Password comparison method
+/**
+ * Method to check if password is correct
+ *
+ * @async
+ * @function isPasswordCorrect
+ * @param {string} password - Password to check
+ * @returns {Promise<boolean>} True if password is correct, false otherwise
+ */
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-// Generate access token
+/**
+ * Method to generate access token
+ *
+ * @function generateAccessToken
+ * @returns {string} Access token
+ */
 userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
@@ -138,7 +157,12 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-// Generate refresh token
+/**
+ * Method to generate refresh token
+ *
+ * @function generateRefreshToken
+ * @returns {string} Refresh token
+ */
 userSchema.methods.generateRefreshToken = async function () {
   const token = jwt.sign({ _id: this._id }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",

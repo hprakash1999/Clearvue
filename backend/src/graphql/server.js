@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError } from "../utils/apiError.js";
 import { resolvers } from "./resolvers.js";
 import { typeDefs } from "./schemas.js";
 
