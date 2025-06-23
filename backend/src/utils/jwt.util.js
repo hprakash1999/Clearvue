@@ -2,18 +2,13 @@ import jwt from "jsonwebtoken";
 
 /**
  * @module utils/jwt
- * JWT utility functions for user authentication
+ * JWT utility function for user authentication
  *
  * @function verifyAccessToken
- * @function signToken
- */
-
-/**
- * Verify a JWT access token
- *
- * @function verifyAccessToken
- * @returns {Object} { valid: true, decoded } | { valid: false, error }
- * @throws {Object} { valid: false, error }
+ * @param {string} accessToken - JWT access token
+ * @param {string} accessTokenSecret - JWT access token secret
+ * @returns {Object} Object containing validity and decoded payload
+ * @throws {Error} If JWT verification fails
  */
 export const verifyAccessToken = (accessToken, accessTokenSecret) => {
   try {
@@ -23,23 +18,5 @@ export const verifyAccessToken = (accessToken, accessTokenSecret) => {
     return { valid: true, decoded };
   } catch (err) {
     return { valid: false, error: err };
-  }
-};
-
-/**
- * Signs a payload into a JWT token
- *
- * @function signToken
- * @returns {Object} { success: true, token }
- * @throws {Object} { success: false, error }
- */
-export const signToken = (payload, secret, options = {}) => {
-  try {
-    // Sign jwt
-    const token = jwt.sign(payload, secret, options);
-
-    return { success: true, token };
-  } catch (err) {
-    return { success: false, error: err };
   }
 };

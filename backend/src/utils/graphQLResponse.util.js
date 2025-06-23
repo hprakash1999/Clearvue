@@ -11,13 +11,10 @@
  * @example
  * new GraphQLResponse({ success: true, message: "User registered successfully!", user: { id: 1, name: "John Doe" },});
  */
-
-class GraphQLResponse {
+export class GraphQLResponse {
   constructor({ success = true, message = "Success", ...rest }) {
     this.success = success;
     this.message = message;
     Object.assign(this, rest);
   }
 }
-
-export { GraphQLResponse };

@@ -20,8 +20,7 @@
  * @example
  * throw new ApiError(400, "Invalid user input", [{ field: "email", message: "Email is required" }]);
  */
-
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(
     statusCode,
     message = "Something went wrong",
@@ -42,4 +41,3 @@ class ApiError extends Error {
     }
   }
 }
-export { ApiError };

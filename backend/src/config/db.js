@@ -11,7 +11,6 @@ import mongoose from "mongoose";
  *
  * @returns {Promise<void>}
  */
-
 export const connectDB = async () => {
   try {
     // Connect to MongoDB using the URI and database name
