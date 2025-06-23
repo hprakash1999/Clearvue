@@ -1,41 +1,45 @@
-import jwt from "jsonwebtoken";
-import { User } from "../models/user.model.js";
-import { ApiError } from "../utils/ApiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { userRepo } from "../repositories/user.repository.js";
+import { verifyAccessToken } from "../utils/jwt.util.js";
 
-// Middleware to verify JWT
-export const verifyJwt = asyncHandler(async (req, res, next) => {
-  // Get token from cookies or authorization header
-  const token =
-    req.cookies?.accessToken ||
-    req.header("Authorization")?.replace("Bearer ", "");
+/**
+ * @module middlewares/auth
+ * Middleware for user authentication
+ *
+ * Includes:
+ * - attachUserToContext: Attach user to request context
+ * - isAdmin: Middleware to check if user is admin
+ */
 
-  if (!token) {
-    console.error("Unauthorized request! No token provided.");
-    throw new ApiError(401, "Unauthorized request! No token provided.");
-  }
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
-  // Verify and decode token
-  const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+/**
+ * Attach user to request context
+ *
+ * @function attachUserToContext
+ * @param {Object} req - Express request object
+ * @returns {Promise<Object>} User object
+ *
+ */
+export const attachUserToContext = async (req) => {
+  // Get access token from cookie
+  const accessToken = req.cookies?.accessToken;
+  if (!accessToken) return null;
 
-  // Find user by decoded token ID
-  const user = await User.findById(decodedToken?._id).select(
-    "-password -refreshToken"
+  // Verify access token
+  const { valid, decoded } = verifyAccessToken(
+    accessToken,
+    ACCESS_TOKEN_SECRET
   );
 
-  if (!user) {
-    console.error("User not found! Invalid access token.");
-    throw new ApiError(404, "User not found! Invalid access token.");
-  }
+  console.log("Decoded in auth middleware", decoded);
+  console.log("Valid in auth middleware", valid);
 
-  // Attach user info to request
-  req.user = {
-    _id: user._id,
-    email: user.email,
-    role: user.role,
-  };
+  if (!valid || !decoded?._id) return null;
 
-  // console.log("User from JWT Middleware:", req.user);
+  // Find user and sanitize it
+  const user = await userRepo
+    .findById(decoded._id)
+    .select("-password -refreshToken -otp");
 
-  next();
-});
+  return user || null;
+};

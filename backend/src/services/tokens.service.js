@@ -1,5 +1,5 @@
 import { userRepo } from "../repositories/user.repository.js";
-import { ApiError } from "./apiError.js";
+import { ApiError } from "../utils/apiError.util.js";
 
 /**
  * @module services/tokens
@@ -25,7 +25,7 @@ export const generateAccessAndRefreshToken = async (id) => {
   // Validate user exists
   const user = await userRepo.findById(id);
 
-  if (!user) throw new ApiError(404, "User not found");
+  if (!user) throw new ApiError(404, "User not found. Please try again.");
 
   // Generate tokens
   const { accessToken, refreshToken } = await generateTokens(user);

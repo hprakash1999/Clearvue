@@ -1,5 +1,5 @@
 import { userRepo } from "../repositories/user.repository.js";
-import { ApiError } from "../utils/apiError.js";
+import { ApiError } from "../utils/apiError.util.js";
 
 /**
  * @module services/auth
@@ -101,7 +101,7 @@ export const loginService = async (loginData) => {
  * @returns {Promise<boolean>} True, if logout is successful
  * @throws {ApiError} If user not found for logout
  */
-export default logoutService = async (userID) => {
+export const logoutService = async (userID) => {
   // Find user in DB
   const user = await userRepo.findById(userID);
 

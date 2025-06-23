@@ -1,9 +1,12 @@
-import { User } from "../../models/user.model.js";
 import { loginService, signupService } from "../../services/auth.service.js";
 import { generateAccessAndRefreshToken } from "../../services/tokens.service.js";
-import { ApiError } from "../../utils/apiError.js";
-import { clearAuthCookies, setAuthCookies } from "../../utils/cookieManager.js";
-import { GraphQLResponse } from "../../utils/graphQLResponse.js";
+import { ApiError } from "../../utils/apiError.util.js";
+import {
+  clearAuthCookies,
+  setAuthCookies,
+} from "../../utils/cookieManager.util.js";
+import { GraphQLResponse } from "../../utils/graphQLResponse.util.js";
+import { sanitizeUser } from "../../utils/sanitizeUser.util.js";
 
 import {
   loginValidator,
@@ -35,7 +38,7 @@ export const authResolvers = {
      * @returns {Promise<GraphQLResponse>}
      * @throws {ApiError} On validation or unexpected errors
      */
-    signup: async (_, { input }, context) => {
+    signup: async (_parent, { input }, context) => {
       const { res } = context;
 
       try {
@@ -49,10 +52,8 @@ export const authResolvers = {
         const { accessToken, refreshToken } =
           await generateAccessAndRefreshToken(createdUser._id);
 
-        // Fetch sanitized user (without password & tokens)
-        const sanitizedUser = await User.findById(createdUser._id).select(
-          "-password -refreshToken"
-        );
+        // Sanitize user data
+        const sanitizedUser = sanitizeUser(createdUser);
 
         // Set auth cookies
         setAuthCookies(res, { accessToken, refreshToken });
@@ -97,7 +98,7 @@ export const authResolvers = {
      * @returns {Promise<GraphQLResponse>}
      * @throws {ApiError} On validation or unexpected errors
      */
-    login: async (_, { input }, context) => {
+    login: async (_parent, { input }, context) => {
       const { res } = context;
 
       try {
@@ -114,11 +115,14 @@ export const authResolvers = {
         // Set auth cookies
         setAuthCookies(res, { accessToken, refreshToken });
 
+        // Sanitize user data
+        const sanitizedUser = sanitizeUser(loggedInUser);
+
         // Return a formatted GraphQL response
         return new GraphQLResponse({
           success: true,
           message: "User logged in successfully!",
-          user: loggedInUser,
+          user: sanitizedUser,
         });
       } catch (err) {
         // Handle Zod validation errors
@@ -148,7 +152,7 @@ export const authResolvers = {
      * @returns {Promise<GraphQLResponse>}
      * @throws {ApiError} On validation or unexpected errors
      */
-    logout: async (_, _, context) => {
+    logout: async (_parent, _args, context) => {
       const { res, user } = context;
 
       try {

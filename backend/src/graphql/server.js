@@ -1,6 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { ApiError } from "../utils/apiError.js";
+import { attachUserToContext } from "../middlewares/auth.middleware.js";
+import { ApiError } from "../utils/apiError.util.js";
 import { resolvers } from "./resolvers.js";
 import { typeDefs } from "./schemas.js";
 
@@ -49,7 +50,12 @@ export const setupGraphQL = async (app) => {
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      context: async ({ req, res }) => ({ req, res }), // Pass context to resolvers
+      // Attach context to resolvers
+      context: async ({ req, res }) => {
+        const user = await attachUserToContext(req); // Attach user to context
+
+        return { req, res, user };
+      },
     })
   );
 };
