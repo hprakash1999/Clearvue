@@ -7,7 +7,6 @@ import { verifyAccessToken } from "../utils/jwt.util.js";
  *
  * Includes:
  * - attachUserToContext: Attach user to request context
- * - isAdmin: Middleware to check if user is admin
  */
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
@@ -18,7 +17,6 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
  * @function attachUserToContext
  * @param {Object} req - Express request object
  * @returns {Promise<Object>} User object
- *
  */
 export const attachUserToContext = async (req) => {
   // Get access token from cookie

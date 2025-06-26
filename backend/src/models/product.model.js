@@ -6,12 +6,9 @@ import mongoose from "mongoose";
  *
  * Includes:
  * - name: Product name
- * - type: Product type (e.g. lens, frame, etc)
- * - size: Product size
- * - color: Product color
- * - material: Product material
+ * - category: Product type (e.g. lens, frame, assessories, etc)
  * - gender: Product gender
- * - description: Product description
+ * - description: Product description (key-value pairs)
  * - variants: Array of product variant IDs
  * - reviewCount: Number of product reviews
  * - avgRating: Average product rating
@@ -28,29 +25,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    type: {
+    category: {
       type: String,
       required: true,
-      trim: true,
-      lowercase: true,
-    },
-    size: {
-      type: String,
-      enum: ["small", "medium", "large", "extra-large"],
-      required: true,
-      trim: true,
-    },
-    color: {
-      type: String,
-      required: true,
-      trim: true,
-      lowercase: true,
-    },
-    material: {
-      type: String,
-      required: true,
-      trim: true,
-      lowercase: true,
+      enum: ["lens", "frame", "accessories"],
     },
     gender: {
       type: String,
@@ -59,8 +37,8 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     description: {
-      type: String,
-      required: true,
+      type: Map,
+      of: String,
     },
     variants: [
       {
