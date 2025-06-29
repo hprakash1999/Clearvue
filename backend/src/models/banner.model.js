@@ -52,7 +52,7 @@ const bannerSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Banner = mongoose.model("Banner", bannerSchema);

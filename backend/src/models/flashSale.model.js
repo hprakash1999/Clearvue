@@ -36,7 +36,7 @@ const flashSaleSchema = new mongoose.Schema(
       default: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const FlashSale = mongoose.model("FlashSale", flashSaleSchema);

@@ -4,23 +4,13 @@ import { GraphQLResponse } from "../../utils/graphQLResponse.util.js";
 import { sanitizeUser } from "../../utils/sanitizeUser.util.js";
 
 // Cookie manager
-import {
-  clearAuthCookies,
-  setAuthCookies,
-} from "../../utils/cookieManager.util.js";
+import { clearAuthCookies, setAuthCookies } from "../../utils/cookieManager.util.js";
 
 // Validators
-import {
-  loginValidator,
-  signupValidator,
-} from "../../validators/auth.validator.js";
+import { loginValidator, signupValidator } from "../../validators/auth.validator.js";
 
 // Services
-import {
-  loginService,
-  logoutService,
-  signupService,
-} from "../../services/auth.service.js";
+import { loginService, logoutService, signupService } from "../../services/auth.service.js";
 import { generateAccessAndRefreshToken } from "../../services/tokens.service.js";
 
 /**
@@ -59,8 +49,7 @@ export const authResolvers = {
         const createdUser = await signupService(validatedInput);
 
         // Generate tokens and save refreshToken on user
-        const { accessToken, refreshToken } =
-          await generateAccessAndRefreshToken(createdUser._id);
+        const { accessToken, refreshToken } = await generateAccessAndRefreshToken(createdUser._id);
 
         // Sanitize user data
         const sanitizedUser = sanitizeUser(createdUser);
@@ -82,7 +71,7 @@ export const authResolvers = {
           throw new ApiError(
             400,
             "Signup validation error. Please check your request data.",
-            err.errors
+            err.errors,
           );
         }
 
@@ -119,8 +108,7 @@ export const authResolvers = {
         const loggedInUser = await loginService(validatedInput);
 
         // Generate tokens and save refreshToken on user
-        const { accessToken, refreshToken } =
-          await generateAccessAndRefreshToken(loggedInUser._id);
+        const { accessToken, refreshToken } = await generateAccessAndRefreshToken(loggedInUser._id);
 
         // Set auth cookies
         setAuthCookies(res, { accessToken, refreshToken });
@@ -142,7 +130,7 @@ export const authResolvers = {
           throw new ApiError(
             400,
             "Login validation error. Please check your credentials.",
-            err.errors
+            err.errors,
           );
         }
 

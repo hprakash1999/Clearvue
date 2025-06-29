@@ -42,10 +42,7 @@ const productVariantSchema = new Schema(
       default: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-export const ProductVariant = mongoose.model(
-  "ProductVariant",
-  productVariantSchema
-);
+export const ProductVariant = mongoose.model("ProductVariant", productVariantSchema);

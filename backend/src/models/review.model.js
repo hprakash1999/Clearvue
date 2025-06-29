@@ -38,7 +38,7 @@ const reviewSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Review = mongoose.model("Review", reviewSchema);

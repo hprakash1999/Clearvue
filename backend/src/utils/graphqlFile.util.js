@@ -32,10 +32,7 @@ export const saveMultipleGraphQLUploadsToTemp = async (uploads) => {
   for (const upload of uploads) {
     const { createReadStream, filename } = await upload;
 
-    const tempFilePath = await saveGraphQLUploadToTemp(
-      createReadStream(),
-      filename
-    );
+    const tempFilePath = await saveGraphQLUploadToTemp(createReadStream(), filename);
     tempFilePaths.push(tempFilePath);
   }
 

@@ -32,7 +32,7 @@ export const generateAccessAndRefreshToken = async (id) => {
   const updatedUser = await userRepo.update(
     id,
     { refreshToken },
-    { validateBeforeSave: false, new: true }
+    { validateBeforeSave: false, new: true },
   );
 
   if (!updatedUser) {

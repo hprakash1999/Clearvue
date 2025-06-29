@@ -80,7 +80,7 @@ const productSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Product = mongoose.model("Product", productSchema);

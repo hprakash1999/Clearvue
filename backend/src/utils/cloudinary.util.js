@@ -20,10 +20,7 @@ cloudinary.config({
 });
 
 // Upload Single Image to Cloudinary
-export const uploadSingleImageToCloudinary = async (
-  localFilePath,
-  folder = "misc"
-) => {
+export const uploadSingleImageToCloudinary = async (localFilePath, folder = "misc") => {
   if (!localFilePath) throw new ApiError(400, "Missing local file path");
 
   try {
@@ -42,10 +39,7 @@ export const uploadSingleImageToCloudinary = async (
 };
 
 // Upload Multiple Images to Cloudinary
-export const uploadMultipleImagesToCloudinary = async (
-  localFilePaths = [],
-  folder = "misc"
-) => {
+export const uploadMultipleImagesToCloudinary = async (localFilePaths = [], folder = "misc") => {
   try {
     const uploadResults = [];
 

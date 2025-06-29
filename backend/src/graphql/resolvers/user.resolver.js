@@ -41,23 +41,13 @@ export const userResolver = {
         const { createReadStream, filename } = await input;
 
         // Save file stream to temp folder
-        const tempFilePath = await saveGraphQLUploadToTemp(
-          createReadStream(),
-          filename
-        );
+        const tempFilePath = await saveGraphQLUploadToTemp(createReadStream(), filename);
 
         // Upload to Cloudinary
-        const uploadResult = await uploadSingleImageToCloudinary(
-          tempFilePath,
-          "avatars"
-        ); // To "uploads/avatars" folder
+        const uploadResult = await uploadSingleImageToCloudinary(tempFilePath, "avatars"); // To "uploads/avatars" folder
 
         // Save URL  to user document
-        await userRepo.update(
-          user._id,
-          { avatar: uploadResult.secure_url },
-          { new: true }
-        );
+        await userRepo.update(user._id, { avatar: uploadResult.secure_url }, { new: true });
 
         return {
           success: true,

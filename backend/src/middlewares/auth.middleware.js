@@ -24,10 +24,7 @@ export const attachUserToContext = async (req) => {
   if (!accessToken) return null;
 
   // Verify access token
-  const { valid, decoded } = verifyAccessToken(
-    accessToken,
-    ACCESS_TOKEN_SECRET
-  );
+  const { valid, decoded } = verifyAccessToken(accessToken, ACCESS_TOKEN_SECRET);
 
   if (!valid || !decoded?._id) return null;
 

@@ -107,7 +107,7 @@ const userSchema = new mongoose.Schema(
       expiresAt: { type: Date },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 /**
@@ -153,7 +153,7 @@ userSchema.methods.generateAccessToken = function () {
       gender: this.gender,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: "1d" },
   );
 };
 

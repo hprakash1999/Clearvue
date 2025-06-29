@@ -37,13 +37,8 @@ export const signupService = async (userData) => {
   const existingUser = await userRepo.findByEmailOrPhone(email, phone);
 
   if (existingUser) {
-    console.error(
-      "Signup error: User already exists with this email or phone."
-    );
-    throw new ApiError(
-      409,
-      "User already exists with this email or phone. Please login."
-    );
+    console.error("Signup error: User already exists with this email or phone.");
+    throw new ApiError(409, "User already exists with this email or phone. Please login.");
   }
 
   // Create new user
@@ -80,10 +75,7 @@ export const loginService = async (loginData) => {
 
   if (!user) {
     console.error("Login error: User not found with this email.");
-    throw new ApiError(
-      404,
-      "User not found. Please check your email and try again."
-    );
+    throw new ApiError(404, "User not found. Please check your email and try again.");
   }
 
   // Check password
@@ -91,10 +83,7 @@ export const loginService = async (loginData) => {
 
   if (!isPasswordCorrect) {
     console.error("Login error: Incorrect email or password.");
-    throw new ApiError(
-      401,
-      "Incorrect email or password. Please check and try again."
-    );
+    throw new ApiError(401, "Incorrect email or password. Please check and try again.");
   }
 
   return user;
@@ -116,7 +105,7 @@ export const logoutService = async (userId) => {
   const updatedUser = await userRepo.update(
     userId,
     { refreshToken: null },
-    { validateBeforeSave: false, new: true }
+    { validateBeforeSave: false, new: true },
   );
 
   if (!updatedUser) {

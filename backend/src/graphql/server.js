@@ -63,6 +63,6 @@ export const setupGraphQL = async (app) => {
 
         return { req, res, user };
       },
-    })
+    }),
   );
 };
