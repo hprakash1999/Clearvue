@@ -1,21 +1,27 @@
+// Utils
+import { ApiError } from "../../utils/apiError.util.js";
+import { GraphQLResponse } from "../../utils/graphQLResponse.util.js";
+import { sanitizeUser } from "../../utils/sanitizeUser.util.js";
+
+// Cookie manager
+import {
+  clearAuthCookies,
+  setAuthCookies,
+} from "../../utils/cookieManager.util.js";
+
+// Validators
+import {
+  loginValidator,
+  signupValidator,
+} from "../../validators/auth.validator.js";
+
+// Services
 import {
   loginService,
   logoutService,
   signupService,
 } from "../../services/auth.service.js";
 import { generateAccessAndRefreshToken } from "../../services/tokens.service.js";
-import { ApiError } from "../../utils/apiError.util.js";
-import {
-  clearAuthCookies,
-  setAuthCookies,
-} from "../../utils/cookieManager.util.js";
-import { GraphQLResponse } from "../../utils/graphQLResponse.util.js";
-import { sanitizeUser } from "../../utils/sanitizeUser.util.js";
-
-import {
-  loginValidator,
-  signupValidator,
-} from "../../validators/auth.validator.js";
 
 /**
  * @module graphql/resolvers/auth.resolver

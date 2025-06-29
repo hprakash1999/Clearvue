@@ -1,5 +1,8 @@
-import { userRepo } from "../repositories/user.repository.js";
+// Utils
 import { ApiError } from "../utils/apiError.util.js";
+
+// Repositories
+import { userRepo } from "../repositories/user.repository.js";
 
 /**
  * @module services/tokens
@@ -22,18 +25,19 @@ export const generateTokens = async (user) => {
 
 // Generate access and refresh tokens and save refresh token on user
 export const generateAccessAndRefreshToken = async (id) => {
-  // Validate user exists
-  const user = await userRepo.findById(id);
-
-  if (!user) throw new ApiError(404, "User not found. Please try again.");
-
   // Generate tokens
   const { accessToken, refreshToken } = await generateTokens(user);
 
   // Save refresh token on user
-  user.refreshToken = refreshToken;
+  const updatedUser = await userRepo.update(
+    id,
+    { refreshToken },
+    { validateBeforeSave: false, new: true }
+  );
 
-  await user.save({ validateBeforeSave: false });
+  if (!updatedUser) {
+    throw new ApiError(404, "User not found");
+  }
 
   return { accessToken, refreshToken };
 };

@@ -1,5 +1,8 @@
-import { userRepo } from "../repositories/user.repository.js";
+// Utils
 import { ApiError } from "../utils/apiError.util.js";
+
+// Repositories
+import { userRepo } from "../repositories/user.repository.js";
 
 /**
  * @module services/auth

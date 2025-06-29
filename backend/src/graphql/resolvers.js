@@ -1,4 +1,7 @@
+// GraphQL tools
 import { mergeResolvers } from "@graphql-tools/merge";
+
+// Resolvers
 import { authResolvers } from "./resolvers/auth.resolver.js";
 
 /**

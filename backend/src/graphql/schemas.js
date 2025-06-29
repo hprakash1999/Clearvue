@@ -1,4 +1,7 @@
+// GraphQL tools
 import { mergeTypeDefs } from "@graphql-tools/merge";
+
+// Schemas
 import { authTypeDefs } from "./schemas/auth.schema.js";
 
 /**

@@ -1,7 +1,14 @@
+// Apollo server
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
+
+// Middleware to attach user to context
 import { attachUserToContext } from "../middlewares/auth.middleware.js";
+
+// Utils
 import { ApiError } from "../utils/apiError.util.js";
+
+// Combined resolver and schema
 import { resolvers } from "./resolvers.js";
 import { typeDefs } from "./schemas.js";
 

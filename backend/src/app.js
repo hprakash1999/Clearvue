@@ -1,6 +1,11 @@
+// Core imports
+import express from "express";
+
+// Middlewares
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express from "express";
+
+// GraphQL server
 import { setupGraphQL } from "./graphql/server.js";
 
 /**
