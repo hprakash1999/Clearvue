@@ -1,7 +1,5 @@
-// Core imports
 import dotenv from "dotenv";
 
-// Modules (server and DB connection)
 import { app } from "./app.js";
 import { connectDB } from "./config/db.js";
 

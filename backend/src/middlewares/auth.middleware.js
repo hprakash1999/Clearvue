@@ -1,7 +1,4 @@
-// Repositories
 import { userRepo } from "../repositories/user.repository.js";
-
-// Verify token util
 import { verifyAccessToken } from "../utils/jwt.util.js";
 
 /**
@@ -35,7 +32,7 @@ export const attachUserToContext = async (req) => {
   if (!valid || !decoded?._id) return null;
 
   // Find user and sanitize it
-  const user = await userRepo.findById(decoded._id);
+  const user = await userRepo.findByID(decoded._id);
 
   return user || null;
 };

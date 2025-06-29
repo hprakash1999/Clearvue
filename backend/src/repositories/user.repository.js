@@ -9,9 +9,9 @@ import { User } from "../models/user.model.js";
  * - update: Update a user entry in the database
  * - findByEmail: Find a user entry by email
  * - findByEmailOrPhone: Find a user entry by email or phone
- * - findById: Find a user entry by ID
+ * - findByID: Find a user entry by id
  * - findAll: Find all users
- * - delete: Delete a user entry by ID
+ * - delete: Delete a user entry by id
  */
 export class UserRepo {
   constructor(model = User) {
@@ -37,8 +37,8 @@ export class UserRepo {
     return await this.model.findOne({ $or: [{ email }, { phone }] });
   }
 
-  // Find a user entry by ID
-  async findById(id) {
+  // Find a user entry by id
+  async findByID(id) {
     return await this.model.findById(id);
   }
 
@@ -47,7 +47,7 @@ export class UserRepo {
     return await this.model.find();
   }
 
-  // Delete a user entry by ID
+  // Delete a user entry by id
   async delete(id) {
     return await this.model.findByIdAndDelete(id);
   }

@@ -1,4 +1,3 @@
-// GraphQL tools
 import { mergeTypeDefs } from "@graphql-tools/merge";
 
 // Schemas

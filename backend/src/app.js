@@ -1,4 +1,3 @@
-// Core imports
 import express from "express";
 
 // Middlewares

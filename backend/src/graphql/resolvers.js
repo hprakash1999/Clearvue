@@ -1,4 +1,3 @@
-// GraphQL tools
 import { mergeResolvers } from "@graphql-tools/merge";
 
 // Resolvers

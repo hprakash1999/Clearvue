@@ -1,16 +1,13 @@
-// Utils
-import { ApiError } from "../utils/apiError.util.js";
-
-// Repositories
 import { userRepo } from "../repositories/user.repository.js";
+import { ApiError } from "../utils/apiError.util.js";
 
 /**
  * @module services/tokens
- * Generates access and refresh tokens for a given user ID.
+ * Generates access and refresh tokens for a given user id.
  *
  * @async
  * @function generateAccessAndRefreshToken
- * @param {string} id - The ID of the user to generate tokens for.
+ * @param {string} id - The id of the user to generate tokens for.
  * @returns {Promise<Object>} An object containing the generated access and refresh tokens.
  * @throws {ApiError} If the user is not found.
  */
@@ -25,6 +22,9 @@ export const generateTokens = async (user) => {
 
 // Generate access and refresh tokens and save refresh token on user
 export const generateAccessAndRefreshToken = async (id) => {
+  // Find user by id
+  const user = await userRepo.findByID(id);
+
   // Generate tokens
   const { accessToken, refreshToken } = await generateTokens(user);
 

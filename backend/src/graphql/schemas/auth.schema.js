@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 /**
- * @module graphql/schemas/auth.schema
+ * @module graphql/schemas/auth
  * GraphQL type definitions (SDL) for auth-related operations.
  *
  * Includes:
@@ -9,7 +9,7 @@ import gql from "graphql-tag";
  * - Signup input & response types
  * - Login input & response types
  * - Common response type
- * - Root-level Mutation for user operations
+ * - Root-level Mutation for auth operations
  * - Empty Query placeholder
  *
  */

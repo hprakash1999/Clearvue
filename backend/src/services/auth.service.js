@@ -1,8 +1,5 @@
-// Utils
-import { ApiError } from "../utils/apiError.util.js";
-
-// Repositories
 import { userRepo } from "../repositories/user.repository.js";
+import { ApiError } from "../utils/apiError.util.js";
 
 /**
  * @module services/auth
@@ -11,6 +8,7 @@ import { userRepo } from "../repositories/user.repository.js";
  * Includes:
  * - signupService: Create a new user after checking for duplicates
  * - loginService: Authenticate a user and return tokens
+ * - logoutService: Logout user by clearing refresh token
  */
 
 /**
@@ -39,14 +37,21 @@ export const signupService = async (userData) => {
   const existingUser = await userRepo.findByEmailOrPhone(email, phone);
 
   if (existingUser) {
-    throw new ApiError(409, "User already exists with this email or phone.");
+    console.error(
+      "Signup error: User already exists with this email or phone."
+    );
+    throw new ApiError(
+      409,
+      "User already exists with this email or phone. Please login."
+    );
   }
 
   // Create new user
   const user = await userRepo.insert(userData);
 
   if (!user) {
-    throw new ApiError(500, "Failed to create user. Please try again.");
+    console.error("Signup error: Failed to create user in db.");
+    throw new ApiError(500, "Failed to signup user. Please try again.");
   }
 
   return user;
@@ -74,6 +79,7 @@ export const loginService = async (loginData) => {
   const user = await userRepo.findByEmail(email);
 
   if (!user) {
+    console.error("Login error: User not found with this email.");
     throw new ApiError(
       404,
       "User not found. Please check your email and try again."
@@ -84,6 +90,7 @@ export const loginService = async (loginData) => {
   const isPasswordCorrect = await user.isPasswordCorrect(password);
 
   if (!isPasswordCorrect) {
+    console.error("Login error: Incorrect email or password.");
     throw new ApiError(
       401,
       "Incorrect email or password. Please check and try again."
@@ -99,21 +106,23 @@ export const loginService = async (loginData) => {
  *
  * @async
  * @function logoutService
- * @param {string} userID - User's ID
+ * @param {string} userID - User's id
  *
  * @returns {Promise<boolean>} True, if logout is successful
  * @throws {ApiError} If user not found for logout
  */
-export const logoutService = async (userID) => {
-  // Find user in DB
-  const user = await userRepo.findById(userID);
+export const logoutService = async (userId) => {
+  // Clear refresh token in DB
+  const updatedUser = await userRepo.update(
+    userId,
+    { refreshToken: null },
+    { validateBeforeSave: false, new: true }
+  );
 
-  if (!user) throw new ApiError(404, "User not found for logout");
-
-  // Clear refresh token
-  user.refreshToken = null;
-
-  await user.save({ validateBeforeSave: false });
+  if (!updatedUser) {
+    console.error("Logout error: User not found in db.");
+    throw new ApiError(404, "Logout failed. Please try again.");
+  }
 
   return true;
 };

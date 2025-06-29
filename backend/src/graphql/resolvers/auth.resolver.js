@@ -24,10 +24,10 @@ import {
 import { generateAccessAndRefreshToken } from "../../services/tokens.service.js";
 
 /**
- * @module graphql/resolvers/auth.resolver
+ * @module graphql/resolvers/auth
  * Resolver map for auth-related GraphQL operations.
  *
- * Currently includes:
+ * Includes:
  * - Mutation.signup: Handles new user registration
  * - Mutation.login: Handles user login
  * - Mutation.logout: Handles user logout
@@ -40,11 +40,9 @@ export const authResolvers = {
      * - Creating a user via the signup service
      * - Generating JWT access & refresh tokens
      * - Setting tokens in HTTP-only cookies
-     * - Returning a GraphQLResponse with the user data
      *
      * @async
-     * @param {Object} _ - Unused parent arg (root)
-     * @param {Object} args - Resolver arguments
+     * @param {Object} _parent - Unused parent arg (root)
      * @param {Object} args.input - Signup input payload
      * @param {Object} context - GraphQL context (contains res object)
      * @returns {Promise<GraphQLResponse>}
@@ -102,11 +100,9 @@ export const authResolvers = {
      * - Validating input via Zod
      * - Generating JWT access & refresh tokens
      * - Setting tokens in HTTP-only cookies
-     * - Returning a GraphQLResponse with the user data
      *
      * @async
-     * @param {Object} _ - Unused parent arg (root)
-     * @param {Object} args - Resolver arguments
+     * @param {Object} _parent - Unused parent arg (root)
      * @param {Object} args.input - Login input payload
      * @param {Object} context - GraphQL context (contains res object)
      * @returns {Promise<GraphQLResponse>}
@@ -141,11 +137,11 @@ export const authResolvers = {
       } catch (err) {
         // Handle Zod validation errors
         if (err.name === "ZodError") {
-          console.error("Signup validation error. ERR: ", err);
+          console.error("Login validation error. ERR: ", err);
 
           throw new ApiError(
             400,
-            "Signup validation error. Please check your request data.",
+            "Login validation error. Please check your credentials.",
             err.errors
           );
         }
@@ -165,26 +161,27 @@ export const authResolvers = {
      * - Clearing refresh token from DB
      *
      * @async
+     * @param {Object} context - GraphQL context (contains res object)
      * @returns {Promise<GraphQLResponse>}
      * @throws {ApiError} On validation or unexpected errors
      */
     logout: async (_parent, _args, context) => {
-      console.log("Context: ", context);
-
       const { res, user } = context;
 
       try {
+        if (!user) {
+          console.error("Logout error: User not found in context.");
+          throw new ApiError(401, "Unauthorized request. Please log in.");
+        }
+
         // Clear auth cookies
         clearAuthCookies(res);
 
         // Clear refresh token from DB
         const isLoggedOut = await logoutService(user._id);
 
-        if (!isLoggedOut)
-          throw new ApiError(500, "Failed to logout. Please try again.");
-
         return new GraphQLResponse({
-          success: true,
+          success: isLoggedOut,
           message: "User logged out successfully!",
         });
       } catch (err) {

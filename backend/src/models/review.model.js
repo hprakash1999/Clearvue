@@ -5,8 +5,8 @@ import mongoose from "mongoose";
  * Mongoose model for product reviews.
  *
  * Includes:
- * - user: User ID
- * - product: Product ID
+ * - user: User id
+ * - product: Product id
  * - rating: Review rating
  * - comment: Review comment
  * - isFeatured: Flag indicating if the review is featured
