@@ -55,7 +55,7 @@ export const setupGraphQL = async (app) => {
 
   // Mount Apollo middleware on Express under /graphql
   app.use(
-    "/graphql",
+    "/api/graphql",
     expressMiddleware(server, {
       // Attach context to resolvers
       context: async ({ req, res }) => {
