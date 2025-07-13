@@ -119,7 +119,7 @@ export const authResolvers = {
         // Return a formatted GraphQL response
         return new GraphQLResponse({
           success: true,
-          message: "User logged in successfully!",
+          message: "User logged-in successfully!",
           user: sanitizedUser,
         });
       } catch (err) {

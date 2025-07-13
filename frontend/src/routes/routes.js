@@ -1,13 +1,11 @@
-import { Home } from "../pages/Home";
-import { Login } from "../pages/Login";
-import { Register } from "../pages/Register";
+import { lazy } from "react";
 
 // Routes data
 export const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: lazy(() => import("../pages/Home")),
     showInNavbar: true,
     icon: null,
     protected: false,
@@ -16,7 +14,7 @@ export const routes = [
   {
     path: "/in",
     name: "Login",
-    component: Login,
+    component: lazy(() => import("../pages/Login")),
     showInNavbar: false,
     icon: null,
     protected: false,
@@ -25,7 +23,7 @@ export const routes = [
   {
     path: "/register",
     name: "Register",
-    component: Register,
+    component: lazy(() => import("../pages/Register")),
     showInNavbar: false,
     icon: null,
     protected: false,

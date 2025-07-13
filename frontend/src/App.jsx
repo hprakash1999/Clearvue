@@ -7,7 +7,7 @@ import { router } from "./routes/Router.jsx";
 // Create query client
 const queryClient = new QueryClient();
 
-export const App = () => {
+const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
@@ -15,3 +15,5 @@ export const App = () => {
     </QueryClientProvider>
   );
 };
+
+export default App;
