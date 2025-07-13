@@ -1,13 +1,10 @@
+// Api & Mutations
 import { useMutation } from "@tanstack/react-query";
+import { loginExistedUser } from "../api/auth.api.js";
 
-// Api
-import { loginExistedUser } from "../api/auth.js";
-
-// Components
+// Form Data & Layout
 import FormsLayout from "../components/shared/FormsLayout.jsx";
-
-// Forms data
-import { loginFormFields } from "../forms/login.js";
+import { loginFormFields } from "../forms/login.form.js";
 
 const Login = () => {
   // Mutation
