@@ -28,6 +28,7 @@ export const authTypeDefs = gql`
     lastName: String!
     email: String!
     phone: String!
+    avatar: String
     gender: String!
     address: Address!
     role: String!

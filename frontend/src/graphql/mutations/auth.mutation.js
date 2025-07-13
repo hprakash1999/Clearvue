@@ -8,7 +8,11 @@ export const LOGIN_MUTATION = gql`
       message
       user {
         _id
+        firstName
+        lastName
+        avatar
         email
+        gender
         role
       }
     }

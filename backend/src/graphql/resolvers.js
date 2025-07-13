@@ -2,6 +2,7 @@ import { mergeResolvers } from "@graphql-tools/merge";
 
 // Resolvers
 import { authResolvers } from "./resolvers/auth.resolver.js";
+import { userResolver } from "./resolvers/user.resolver.js";
 
 /**
  * @module graphql/resolvers
@@ -11,4 +12,4 @@ import { authResolvers } from "./resolvers/auth.resolver.js";
  */
 
 // Combining all resolvers into one
-export const resolvers = mergeResolvers([authResolvers]);
+export const resolvers = mergeResolvers([authResolvers, userResolver]);
