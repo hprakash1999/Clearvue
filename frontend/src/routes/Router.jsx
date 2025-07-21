@@ -13,7 +13,7 @@ const childRoutes = routes.map((route) =>
   createRoute({
     getParentRoute: () => rootRoute,
     path: route.path,
-    component: route.component,
+    component: () => route.load().then((mod) => mod.default),
   }),
 );
 
