@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
-const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit" }) => {
+const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit", disabled }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -33,7 +33,8 @@ const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit" }) => {
 
       <button
         type="submit"
-        className="w-full rounded-md bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700"
+        className={`w-full rounded-md bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700 ${disabled ? "cursor-not-allowed bg-gray-500" : ""}`}
+        disabled={disabled}
       >
         {submitLabel}
       </button>

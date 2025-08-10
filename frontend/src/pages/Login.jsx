@@ -32,6 +32,7 @@ const Login = () => {
         fields={loginFormFields}
         onSubmit={mutation.mutate}
         submitLabel={mutation.isPending ? "Logging in..." : "Login"}
+        disabled={mutation.isPending}
       />
     </div>
   );

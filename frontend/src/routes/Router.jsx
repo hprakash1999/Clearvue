@@ -1,5 +1,6 @@
 import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 
+import { lazy } from "react";
 import RootLayout from "../components/layouts/RootLayout.jsx";
 import { routes } from "./routes.js";
 
@@ -8,12 +9,12 @@ const rootRoute = createRootRoute({
   component: RootLayout,
 });
 
-// Generate children from routes.js
+// Generate children directly from routes.js
 const childRoutes = routes.map((route) =>
   createRoute({
     getParentRoute: () => rootRoute,
     path: route.path,
-    component: () => route.load().then((mod) => mod.default),
+    component: lazy(() => import(`../pages/${route.name}.jsx`)), // File path
   }),
 );
 
