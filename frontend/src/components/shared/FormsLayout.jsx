@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 
 const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit", disabled }) => {
+  // Form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -18,6 +19,7 @@ const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit", disabled
     >
       <h2 className="text-center text-2xl font-bold text-gray-800">{title}</h2>
 
+      {/* Form fields */}
       {fields.map((field) => (
         <div key={field.name}>
           <label className="block text-sm font-medium text-gray-700">{field.label}</label>
@@ -31,6 +33,7 @@ const FormsLayout = ({ title, fields, onSubmit, submitLabel = "Submit", disabled
         </div>
       ))}
 
+      {/* Button */}
       <button
         type="submit"
         className={`w-full rounded-md bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700 ${disabled ? "cursor-not-allowed bg-gray-500" : ""}`}

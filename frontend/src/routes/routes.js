@@ -23,6 +23,12 @@ export const routes = [
     protected: false,
     role: ["user", "admin"],
   },
+  {
+    path: "/settings",
+    name: "Settings",
+    showInNavbar: false,
+    icon: null,
+    protected: true,
+    role: ["user", "admin"],
+  },
 ];
-
-//* Note: Keep component file name same as route name
